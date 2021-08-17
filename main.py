@@ -199,6 +199,10 @@ def random(pages=1):
 
   return titles
 
+def get_wiki_links(search_term, FIND_ADR=FIND_ADR, RATE_BLOCK=RATE_BLOCK, **kwargs):
+  service = build("customsearch", "v1", developerKey=FIND_ADR)
+  res = service.cse().list(q=search_term, cx=RATE_BLOCK, **kwargs).execute()
+  return res
 
 @cache
 def summary(title, sentences=0, chars=0, auto_suggest=True, redirect=True):
@@ -300,10 +304,7 @@ class WikipediaPage(object):
       return False
     
     
-  def get_wiki_links(search_term, FIND_ADR=FIND_ADR, RATE_BLOCK=RATE_BLOCK, **kwargs):
-    service = build("customsearch", "v1", developerKey=FIND_ADR)
-    res = service.cse().list(q=search_term, cx=RATE_BLOCK, **kwargs).execute()
-    return res
+
     
     
   def __load(self, redirect=True, preload=False):
