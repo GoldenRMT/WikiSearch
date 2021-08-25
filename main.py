@@ -203,7 +203,7 @@ def get_wiki_links(search_term, FIND_ADR=FIND_ADR, RATE_BLOCK=RATE_BLOCK, **kwar
   service = build("customsearch", "v1", developerKey=FIND_ADR)
   response = service.cse().list(q=search_term, cx=RATE_BLOCK, **kwargs).execute()
   res = []
-  for link in urls['items']:
+  for link in response['items']:
     res.append(link['link'])
   return res
 
