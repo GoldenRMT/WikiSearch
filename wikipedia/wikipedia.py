@@ -4,6 +4,7 @@ import requests
 import time
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from googleapiclient.discovery import build
 from decimal import Decimal
 
 from .exceptions import (
@@ -15,7 +16,9 @@ import re
 API_URL = 'http://en.wikipedia.org/w/api.php'
 RATE_LIMIT = False
 RATE_LIMIT_MIN_WAIT = None
+FIND_ADR = "AIzaSyBb96J0bvrLnHS-0xgcEM9LIy_GGZQxphc"
 RATE_LIMIT_LAST_CALL = None
+RATE_BLOCK = "8be1c5c23f30c6fb6"
 USER_AGENT = 'wikipedia (https://github.com/goldsmith/Wikipedia/)'
 
 
@@ -100,21 +103,7 @@ def search(query, results=10, suggestion=False):
   if suggestion:
     search_params['srinfo'] = 'suggestion'
 
-  raw_results = _wiki_request(search_params)
-
-  if 'error' in raw_results:
-    if raw_results['error']['info'] in ('HTTP request timed out.', 'Pool queue is full'):
-      raise HTTPTimeoutError(query)
-    else:
-      raise WikipediaException(raw_results['error']['info'])
-
-  search_results = (d['title'] for d in raw_results['query']['search'])
-
-  if suggestion:
-    if raw_results['query'].get('searchinfo'):
-      return list(search_results), raw_results['query']['searchinfo']['suggestion']
-    else:
-      return list(search_results), None
+  search_results = get_wiki_links(query, search_params)
 
   return list(search_results)
 
@@ -184,6 +173,13 @@ def suggest(query):
 
   return None
 
+def get_wiki_links(search_term, search_params, FIND_ADR=FIND_ADR, RATE_BLOCK=RATE_BLOCK, **kwargs):
+  service = build("customsearch", "v1", developerKey=FIND_ADR)
+  response = service.cse().list(q=search_term, cx=RATE_BLOCK, **kwargs).execute()
+  res = []
+  for link in response['items']:
+    res.append(link['link'])
+  return res
 
 def random(pages=1):
   '''
