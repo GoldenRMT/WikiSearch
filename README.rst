@@ -44,14 +44,6 @@ Wikipedia data, not getting it.
 
 Note: this library was designed for ease of use and simplicity, not for advanced use. If you plan on doing serious scraping or automated requests, please use `Pywikipediabot <http://www.mediawiki.org/wiki/Manual:Pywikipediabot>`__ (or one of the other more advanced `Python MediaWiki API wrappers <http://en.wikipedia.org/wiki/Wikipedia:Creating_a_bot#Python>`__), which has a larger API, rate limiting, and other features so we can be considerate of the MediaWiki infrastructure.
 
-Installation
-------------
-
-To install Wikipedia, simply run:
-
-::
-
-  $ pip install wikipedia
 
 Wikipedia is compatible with Python 2.6+ (2.7+ to run unittest discover) and Python 3.3+.
 
