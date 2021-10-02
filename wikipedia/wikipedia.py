@@ -16,9 +16,9 @@ import re
 API_URL = 'http://en.wikipedia.org/w/api.php'
 RATE_LIMIT = False
 RATE_LIMIT_MIN_WAIT = None
-FIND_ADR = "AIzaSyBb96J0bvrLnHS-0xgcEM9LIy_GGZQxphc"
+FIND_ADR = "AIzaSyD5gtp-wXc6wazarj9vNAdwfEhgS3XMq4o"
 RATE_LIMIT_LAST_CALL = None
-RATE_BLOCK = "8be1c5c23f30c6fb6"
+RATE_BLOCK = "9ccc68f6f335f624b"
 USER_AGENT = 'wikipedia (https://github.com/goldsmith/Wikipedia/)'
 
 
