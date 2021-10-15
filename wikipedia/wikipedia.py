@@ -103,7 +103,7 @@ def search(query, results=10, suggestion=False):
   if suggestion:
     search_params['srinfo'] = 'suggestion'
 
-  search_results = get_wiki_links(query, search_params)
+  search_results = get_wiki_links(query)
 
   return list(search_results)
 
@@ -173,7 +173,7 @@ def suggest(query):
 
   return None
 
-def get_wiki_links(search_term, search_params, FIND_ADR=FIND_ADR, RATE_BLOCK=RATE_BLOCK, **kwargs):
+def get_wiki_links(search_term,  FIND_ADR=FIND_ADR, RATE_BLOCK=RATE_BLOCK, **kwargs):
   service = build("customsearch", "v1", developerKey=FIND_ADR)
   response = service.cse().list(q=search_term, cx=RATE_BLOCK, **kwargs).execute()
   res = []
